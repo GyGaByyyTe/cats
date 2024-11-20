@@ -21,7 +21,7 @@ console.log('next cat size', nextCatSize);
 
 async function setup() {
     await loadResources();
-    setupBoundaries()
+    setupBoundaries(app)
     Runner.run(runner, engine);
     displayCurrentCircle(app, currentCatSize);
     displayNextCat(app, nextCatSize);

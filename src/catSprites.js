@@ -37,14 +37,14 @@ export function displayNextCat(app, nextCatSize) {
     if (nextCatSprite) {
         app.stage.removeChild(nextCatSprite);
     }
-    // const nextCatTexture = getCatTexture(nextCatSize);
-    // const nextCatGraphic = new PIXI.Sprite(PIXI.Assets.get(nextCatTexture));
-    const nextCatGraphic = new PIXI.Graphics();
-    // nextCatGraphic.width = nextCatSize * 10;
-    // nextCatGraphic.height = nextCatSize * 10;
-    nextCatGraphic.beginFill(0x00FF00);
-    nextCatGraphic.drawCircle(0, 0, nextCatSize * 10);
-    nextCatGraphic.endFill();
+    const nextCatTexture = getCatTexture(nextCatSize);
+    const nextCatGraphic = new PIXI.Sprite(PIXI.Assets.get(nextCatTexture));
+    // const nextCatGraphic = new PIXI.Graphics();
+    nextCatGraphic.width = 2 * 10;
+    nextCatGraphic.height = 2 * 10;
+    // nextCatGraphic.beginFill(0x00FF00);
+    // nextCatGraphic.drawCircle(0, 0, 15);
+    // nextCatGraphic.endFill();
     nextCatGraphic.x = app.renderer.width - 100;
     nextCatGraphic.y = 50;
     app.stage.addChild(nextCatGraphic);
@@ -67,12 +67,12 @@ export function dropCat(engine, app, size, x, y = 0) {
     catSprite.endFill();
     catSprite.x = catBody.position.x;
     catSprite.y = catBody.position.y;
-    app.stage.addChild(catSprite);
-    catBody.sprite = catSprite;
+    // app.stage.addChild(catSprite);
 
     // New: Add a border for debugging
     const border = createDebugBorder(size, catBody);
-    catSprite.addChild(border);
+    app.stage.addChild(border);
+    catBody.sprite = border;
 
     Events.on(engine, 'afterUpdate', () => {
         catSprite.x = catBody.position.x;
@@ -86,8 +86,9 @@ export function dropCat(engine, app, size, x, y = 0) {
 
 export function createDebugBorder(size, catBody) {
     const border = new PIXI.Graphics();
-    border.lineStyle(20, 0xFF0000, 1);
+    border.lineStyle(1, 0xFF0000, 1);
     border.drawCircle(0, 0, size * 10);
+    border.endFill();
     border.x = catBody.position.x;
     border.y = catBody.position.y;
     border.rotation = catBody.angle;
